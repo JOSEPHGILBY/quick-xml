@@ -17,6 +17,10 @@ encoding_rs = { version = "0.8", optional = true }
 serde = { version = "1.0", optional = true }
 tokio = { version = "1.20", optional = true, default-features = false, features = ["io-util"] }
 memchr = "2.5"
+syn = { version = "1.0.82", features = ["full", "extra-traits", "parsing"] }
+quote = "1.0.10"
+proc-macro2 = "1.0.32"
+itertools = "0.10.3"
 
 [dev-dependencies]
 criterion = "0.3"
@@ -113,7 +117,7 @@ serialize = ["serde"]
 
 [package.metadata.docs.rs]
 # document all features
-all-features = true
+all-features = false
 # defines the configuration attribute `docs_rs` to enable feature requirements
 # See https://stackoverflow.com/questions/61417452
 rustdoc-args = ["--cfg", "docs_rs"]
@@ -132,6 +136,10 @@ required-features = ["serialize"]
 
 [[test]]
 name = "serde-migrated"
+required-features = ["serialize"]
+
+[[test]]
+name = "serde-namespace-se"
 required-features = ["serialize"]
 
 [[test]]

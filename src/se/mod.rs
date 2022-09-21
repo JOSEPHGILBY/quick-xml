@@ -1,6 +1,21 @@
 //! Module to handle custom serde `Serializer`
 
 mod var;
+pub mod serl;
+pub mod bound;
+pub mod ast;
+pub mod ctxt;
+pub mod derive;
+pub mod attr;
+pub mod respan;
+pub mod check;
+pub mod symbol;
+pub mod case;
+pub mod fragment;
+pub mod dummy;
+pub mod receiver;
+pub mod tryer;
+pub mod pretend;
 
 use self::var::{Map, Seq, Struct, Tuple};
 use crate::{
@@ -31,6 +46,8 @@ pub struct Serializer<'r, W: Write> {
     writer: Writer<W>,
     /// Name of the root tag. If not specified, deduced from the structure name
     root_tag: Option<&'r str>,
+
+    namespace_dict
 }
 
 impl<'r, W: Write> Serializer<'r, W> {

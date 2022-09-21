@@ -1,0 +1,40 @@
+#[doc(hidden)]
+#[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+const _: () = { 
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde; 
+    
+    #[allow(unused_macros)] 
+    macro_rules! try { 
+        ($__expr : expr) => { 
+            match $__expr { 
+                _serde::__private::Ok(__val) => __val, 
+                _serde::__private::Err(__err) => { 
+                    return _serde::__private::Err(__err); 
+                } 
+            } 
+        } 
+    } 
+    
+    #[automatically_derived] 
+    impl _serde::Serialize for Foo { 
+        fn serialize<__S> (&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error> where __S: _serde::Serializer, { 
+            let mut __serde_state = try!(_serde::Serializer::serialize_struct (__serializer, "Foo", false as usize + 1 + 1)); 
+            try!(_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "id" ,&self.id)); 
+            try!(_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "bar" ,&self.bar)); 
+            _serde::ser::SerializeStruct::end(__serde_state) 
+        } 
+    } 
+};
+
+
+#[automatically_derived] 
+impl _serde::Serialize for Foo {
+    fn serialize<__S> (&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error> where __S: _serde::Serializer, { 
+        let mut __serde_state = try!(_serde::Serializer::serialize_map(__serializer, _serde::__private::None)); 
+        try!(_serde::ser::SerializeMap::serialize_entry(&mut __serde_state, "id" ,&self.id)); 
+        try!(_serde::Serialize::serialize(&&self.bar, _serde::__private::ser::FlatMapSerializer(&mut __serde_state))); 
+        _serde::ser::SerializeMap::end(__serde_state) 
+    } 
+};
+
